@@ -6,7 +6,7 @@ class Item:
         self.name = name
         self.price = price
         self.quantity_of_goods = quantity_of_goods
-        self.all.append(self)
+        Item.all.append(self)
 
     def calculate_total_price(self):
         return self.price * self.quantity_of_goods
