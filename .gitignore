@@ -1,4 +1,5 @@
-.DS_Store
+*.DS_Store
+._*
 .gitignor
 .vscode
 /venv
@@ -133,3 +134,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+.gitignore
