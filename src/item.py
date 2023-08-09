@@ -1,17 +1,41 @@
+import csv
+
+
 class Item:
     pay_rate = 1.0
     all = []
 
-    def __init__(self, name, price, quantity_of_goods) -> None:
-        self.name = name
+    def __init__(self, name: str, price: float, quantity: int) -> None:
+        self.__name = name
         self.price = price
-        self.quantity_of_goods = quantity_of_goods
-        Item.all.append(self)
+        self.quantity = quantity
+
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self, name):
+        self.__name = name[:10]
 
     def calculate_total_price(self):
-        return self.price * self.quantity_of_goods
+        return self.price * self.quantity
 
     def apply_discount(self):
         self.price = self.price * self.pay_rate
         return self.price
 
+    @classmethod
+    def instantiate_from_csv(cls):
+        with open(
+            "/Users/a1/SkyPro/electronics-shop-project/src/items.csv", newline=""
+        ) as csfile:
+            reader = csv.DictReader(csfile)
+            for row in reader:
+                print(row["name"], row["price"], row["quantity"])
+                list_item = cls(row["name"], row["price"], row["quantity"])
+                cls.all.append(list_item)
+
+    @staticmethod
+    def string_to_number(string):
+        return int(float(string))
