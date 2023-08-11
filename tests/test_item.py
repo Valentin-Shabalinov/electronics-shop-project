@@ -8,6 +8,14 @@ def item_1():
     return Item("Смартфон", 10000, 20)
 
 
+def test_repr(item_1):
+    assert repr(item_1) == "Item('Смартфон', 10000, 20)"
+
+
+def test_str(item_1):
+    assert str(item_1) == "Смартфон"
+
+
 def test_calculate_total_price(item_1):
     assert item_1.calculate_total_price() == 200000
 
