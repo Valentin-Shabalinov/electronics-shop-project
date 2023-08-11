@@ -1,6 +1,5 @@
 .DS_Store
 ._*
-.gitignor
 .vscode
 /venv
 /youtube_api_manual.py
