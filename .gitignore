@@ -1,5 +1,5 @@
+.DS_Store
 src/.DS_Store
-._*
 .vscode
 /venv
 /youtube_api_manual.py
@@ -133,4 +133,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-.gitignore
