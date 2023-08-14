@@ -11,9 +11,12 @@ class Item:
         self.quantity = quantity
 
     def __repr__(self) -> str:
-        return (
-            f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
-        )
+        return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
+    
+    def __add__(self, other):
+        if isinstance(other, self.__class__):
+            return self.quantity + other.quantity
+        return None
 
     def __str__(self) -> str:
         return self.__name
