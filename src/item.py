@@ -1,6 +1,12 @@
 import csv
 
 
+class InstantiateCSVError(Exception):
+    def __init__(self, *args: object) -> None:
+        super().__init__(*args)
+        self.massage = "InstantiateCSVError: Файл item.csv поврежден"
+
+
 class Item:
     pay_rate = 1.0
     all = []
@@ -11,8 +17,10 @@ class Item:
         self.quantity = quantity
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
-    
+        return (
+            f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
+        )
+
     def __add__(self, other):
         if isinstance(other, self.__class__):
             return self.quantity + other.quantity
@@ -37,15 +45,31 @@ class Item:
         return self.price
 
     @classmethod
-    def instantiate_from_csv(cls):
-        with open(
-            "/Users/a1/SkyPro/electronics-shop-project/src/items.csv", newline=""
-        ) as csfile:
-            reader = csv.DictReader(csfile)
-            for row in reader:
-                print(row["name"], row["price"], row["quantity"])
-                list_item = cls(row["name"], row["price"], row["quantity"])
-                cls.all.append(list_item)
+    def instantiate_from_csv(
+        cls, file_name="/Users/a1/SkyPro/electronics-shop-project/src/items.csv"
+    ):
+        try:
+            with open(file_name, newline="") as csfile:
+                reader = csv.DictReader(csfile)
+                for row in reader:
+                    try:
+                        # print(row["name"], row["price"], row["quantity"])
+                        list_item = cls(row["name"], row["price"], row["quantity"])
+
+                        if (
+                            row["name"] == ""
+                            or row["price"] == ""
+                            or row["quantity"] == ""
+                        ):
+                            raise InstantiateCSVError
+
+                    except InstantiateCSVError as ex:
+                        print(ex.massage)
+
+                    cls.all.append(list_item)
+
+        except FileNotFoundError:
+            print(f"FileNotFoundError: Отсутствует файл {file_name}")
 
     @staticmethod
     def string_to_number(string):
